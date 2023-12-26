@@ -1,0 +1,25 @@
+{
+  "applications": ["tooth"],
+  "changelogDate": "20231226162858",
+  "dto": "mapstruct",
+  "entityTableName": "tooth",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Tooth",
+  "relationships": [
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "pW",
+      "otherEntityRelationshipName": "tooth",
+      "relationshipName": "pw",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

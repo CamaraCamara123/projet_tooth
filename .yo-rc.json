@@ -1,0 +1,19 @@
+{
+  "generator-jhipster": {
+    "applicationIndex": 0,
+    "applicationType": "monolith",
+    "authenticationType": "jwt",
+    "baseName": "tooth",
+    "clientFramework": "react",
+    "devServerPort": 9060,
+    "entities": ["Professor", "Student", "Groupe", "Tooth", "PW", "StudentPW"],
+    "jhipsterVersion": "8.0.0",
+    "jwtSecretKey": "YmUyMjAzNjUyNDcwYzc4Y2Y1NmZkYzM0YzYwMmJkNjljOGYzOTUzMDE2N2M0MGFlOWVhOTYwYjE1ZjFmZDU0NDliMWFjNmNlZGVjZGM0NzI4NzY0ZTY4MGY2MTIyMjQ1YzFhNDg4ZmUwZjY3NmJmZThmMTkyMDgxYTU3OTEyYWM=",
+    "languages": ["en", "fr"],
+    "lastLiquibaseTimestamp": 1703608258000,
+    "nativeLanguage": "en",
+    "packageFolder": "com/tooth",
+    "packageName": "com.tooth",
+    "prodDatabaseType": "mysql"
+  }
+}

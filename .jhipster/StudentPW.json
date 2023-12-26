@@ -1,0 +1,58 @@
+{
+  "applications": ["tooth"],
+  "changelogDate": "20231226163058",
+  "dto": "mapstruct",
+  "entityTableName": "student_pw",
+  "fields": [
+    {
+      "fieldName": "time",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "imageFront",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "imageSide",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "angleLeft",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "angleRigth",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "angleCenter",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "date",
+      "fieldType": "Instant"
+    }
+  ],
+  "name": "StudentPW",
+  "relationships": [
+    {
+      "otherEntityName": "student",
+      "relationshipName": "student",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "pW",
+      "relationshipName": "pw",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

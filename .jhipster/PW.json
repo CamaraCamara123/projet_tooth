@@ -1,0 +1,43 @@
+{
+  "applications": ["tooth"],
+  "changelogDate": "20231226162958",
+  "dto": "mapstruct",
+  "entityTableName": "pw",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "objectif",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "docs",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    }
+  ],
+  "name": "PW",
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "tooth",
+      "otherEntityRelationshipName": "pw",
+      "relationshipName": "tooth",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "code",
+      "otherEntityName": "groupe",
+      "otherEntityRelationshipName": "pw",
+      "relationshipName": "groupe",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

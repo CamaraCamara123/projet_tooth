@@ -27,7 +27,7 @@ public class Tooth implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tooth")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "tooth")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "tooth", "groupes" }, allowSetters = true)
     private Set<PW> pws = new HashSet<>();

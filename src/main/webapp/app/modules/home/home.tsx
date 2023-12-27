@@ -17,7 +17,7 @@ export const Home = () => {
       </Col>
       <Col md="9">
         <h1 className="display-4">
-          <Translate contentKey="home.title">Welcome, Java Hipster!</Translate>
+          <Translate contentKey="home.title">Welcome !</Translate>
         </h1>
         <p className="lead">
           <Translate contentKey="home.subtitle">This is your homepage</Translate>
@@ -53,11 +53,11 @@ export const Home = () => {
             </Alert>
           </div>
         )}
-        <p>
+        {/* <p>
           <Translate contentKey="home.question">If you have any question on JHipster:</Translate>
-        </p>
+        </p>*/}
 
-        <ul>
+        {/*        <ul>
           <li>
             <a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer">
               <Translate contentKey="home.link.homepage">JHipster homepage</Translate>
@@ -83,15 +83,15 @@ export const Home = () => {
               <Translate contentKey="home.link.follow">follow @jhipster on Twitter</Translate>
             </a>
           </li>
-        </ul>
+        </ul>*/}
 
-        <p>
+        {/*<p>
           <Translate contentKey="home.like">If you like JHipster, do not forget to give us a star on</Translate>{' '}
           <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">
             GitHub
           </a>
           !
-        </p>
+        </p>*/}
       </Col>
     </Row>
   );

@@ -28,12 +28,12 @@ public class Professor implements Serializable {
     @Column(name = "grade")
     private String grade;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
     @NotNull
     @JoinColumn(unique = true)
     private User user;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "professor")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "professor", "students", "pws" }, allowSetters = true)
     private Set<Groupe> groupes = new HashSet<>();

@@ -1,6 +1,7 @@
 package com.tooth.repository;
 
 import com.tooth.domain.PW;
+import com.tooth.domain.StudentPW;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -37,4 +38,6 @@ public interface PWRepository extends PWRepositoryWithBagRelationships, JpaRepos
 
     @Query("select pW from PW pW left join fetch pW.tooth where pW.id =:id")
     Optional<PW> findOneWithToOneRelationships(@Param("id") Long id);
+    /*@Query("select pW from Groupe.pws pW where pW. =:id")
+    List<StudentPW> findPWByGroupe(Long id);*/
 }

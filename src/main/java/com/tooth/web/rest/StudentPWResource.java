@@ -1,6 +1,7 @@
 package com.tooth.web.rest;
 
 import com.tooth.repository.StudentPWRepository;
+import com.tooth.security.AuthoritiesConstants;
 import com.tooth.service.StudentPWService;
 import com.tooth.service.dto.StudentPWDTO;
 import com.tooth.web.rest.errors.BadRequestAlertException;
@@ -8,6 +9,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -15,6 +17,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -141,7 +146,26 @@ public class StudentPWResource {
     @GetMapping("")
     public List<StudentPWDTO> getAllStudentPWS(@RequestParam(required = false, defaultValue = "true") boolean eagerload) {
         log.debug("REST request to get all StudentPWS");
-        return studentPWService.findAll();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication.isAuthenticated()) {
+            // Check if the user has the admin role
+            boolean isAdmin = authentication.getAuthorities().contains(new SimpleGrantedAuthority(AuthoritiesConstants.ADMIN));
+
+            if (isAdmin) {
+                return studentPWService.findAll();
+            } else {
+                String username = authentication.getName();
+                boolean isStudent = authentication.getAuthorities().contains(new SimpleGrantedAuthority(AuthoritiesConstants.STUDENT));
+                if (isStudent) {
+                    return studentPWService.findPWByStudent(username);
+                }
+            }
+        } else {
+            return Collections.emptyList();
+        }
+
+        return Collections.emptyList();
     }
 
     /**

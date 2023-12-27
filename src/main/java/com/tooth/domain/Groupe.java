@@ -31,17 +31,17 @@ public class Groupe implements Serializable {
     @Column(name = "year")
     private String year;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @NotNull
     @JsonIgnoreProperties(value = { "user", "groupes" }, allowSetters = true)
     private Professor professor;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "groupe")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "groupe")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "user", "groupe" }, allowSetters = true)
     private Set<Student> students = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "groupes")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "groupes")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "tooth", "groupes" }, allowSetters = true)
     private Set<PW> pws = new HashSet<>();

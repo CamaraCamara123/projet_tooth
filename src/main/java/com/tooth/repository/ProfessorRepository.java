@@ -37,4 +37,7 @@ public interface ProfessorRepository extends JpaRepository<Professor, Long> {
 
     @Query("select professor from Professor professor left join fetch professor.user where professor.id =:id")
     Optional<Professor> findOneWithToOneRelationships(@Param("id") Long id);
+
+    @Query("select p from Professor p where p.user.login =:username")
+    Optional<Professor> findProfessorByUserName(@Param("username") String username);
 }

@@ -1,8 +1,13 @@
 package com.tooth.service;
 
+import com.tooth.domain.Student;
 import com.tooth.domain.StudentPW;
 import com.tooth.repository.StudentPWRepository;
+import com.tooth.repository.StudentRepository;
+import com.tooth.service.dto.PWDTO;
+import com.tooth.service.dto.StudentDTO;
 import com.tooth.service.dto.StudentPWDTO;
+import com.tooth.service.dto.UserDTO;
 import com.tooth.service.mapper.StudentPWMapper;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,6 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,6 +33,9 @@ public class StudentPWService {
     private final StudentPWRepository studentPWRepository;
 
     private final StudentPWMapper studentPWMapper;
+
+    @Autowired
+    StudentRepository studentRepository;
 
     public StudentPWService(StudentPWRepository studentPWRepository, StudentPWMapper studentPWMapper) {
         this.studentPWRepository = studentPWRepository;
@@ -119,5 +128,44 @@ public class StudentPWService {
     public void delete(Long id) {
         log.debug("Request to delete StudentPW : {}", id);
         studentPWRepository.deleteById(id);
+    }
+
+    public List<StudentPWDTO> findPWByStudent(String username) {
+        Student student = studentRepository.findStudentByUserName(username);
+        List<StudentPW> studentPWS = studentPWRepository.findStudentPWByStudent(student.getId());
+        return studentPWS
+            .stream()
+            .map(g -> {
+                StudentPWDTO gt = new StudentPWDTO();
+                gt.setId(g.getId());
+                gt.setDate(g.getDate());
+                gt.setImageFront(g.getImageFront());
+                gt.setImageFrontContentType(g.getImageFrontContentType());
+                gt.setTime(g.getTime());
+                gt.setAngleCenter(g.getAngleCenter());
+                gt.setAngleLeft(g.getAngleLeft());
+                gt.setAngleRigth(g.getAngleRigth());
+                gt.setImageSide(g.getImageSide());
+
+                StudentDTO st = new StudentDTO();
+                st.setId(g.getStudent().getId());
+                st.setCin(g.getStudent().getCin());
+                st.setCne(g.getStudent().getCne());
+                st.setBirthDay(g.getStudent().getBirthDay());
+                st.setNumber(g.getStudent().getNumber());
+
+                UserDTO us = new UserDTO();
+                us.setId(g.getStudent().getUser().getId());
+                us.setLogin(g.getStudent().getUser().getLogin());
+                st.setUser(us);
+                gt.setStudent(st);
+
+                PWDTO pw = new PWDTO();
+                pw.setId(g.getPw().getId());
+                pw.setTitle(g.getPw().getTitle());
+                gt.setPw(pw);
+                return gt;
+            })
+            .collect(Collectors.toList());
     }
 }

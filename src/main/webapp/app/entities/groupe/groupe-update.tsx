@@ -117,7 +117,7 @@ export const GroupeUpdate = () => {
                 {professors
                   ? professors.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.user.login}
                       </option>
                     ))
                   : null}

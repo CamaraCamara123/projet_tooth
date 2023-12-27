@@ -85,12 +85,12 @@ export const StudentPW = () => {
           <Table responsive>
             <thead>
               <tr>
-                <th className="hand" onClick={sort('id')}>
+                {/*<th className="hand" onClick={sort('id')}>
                   <Translate contentKey="toothApp.studentPW.id">ID</Translate> <FontAwesomeIcon icon={getSortIconByFieldName('id')} />
                 </th>
                 <th className="hand" onClick={sort('time')}>
                   <Translate contentKey="toothApp.studentPW.time">Time</Translate> <FontAwesomeIcon icon={getSortIconByFieldName('time')} />
-                </th>
+                </th>*/}
                 <th className="hand" onClick={sort('imageFront')}>
                   <Translate contentKey="toothApp.studentPW.imageFront">Image Front</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('imageFront')} />
@@ -126,12 +126,12 @@ export const StudentPW = () => {
             <tbody>
               {studentPWList.map((studentPW, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
-                  <td>
+                  {/*<td>
                     <Button tag={Link} to={`/student-pw/${studentPW.id}`} color="link" size="sm">
                       {studentPW.id}
                     </Button>
                   </td>
-                  <td>{studentPW.time}</td>
+                  <td>{studentPW.time}</td>*/}
                   <td>
                     {studentPW.imageFront ? (
                       <div>
@@ -139,14 +139,14 @@ export const StudentPW = () => {
                           <a onClick={openFile(studentPW.imageFrontContentType, studentPW.imageFront)}>
                             <img
                               src={`data:${studentPW.imageFrontContentType};base64,${studentPW.imageFront}`}
-                              style={{ maxHeight: '30px' }}
+                              style={{ maxHeight: '50px', maxWidth: '50px' }}
                             />
                             &nbsp;
                           </a>
                         ) : null}
-                        <span>
+                        {/*<span>
                           {studentPW.imageFrontContentType}, {byteSize(studentPW.imageFront)}
-                        </span>
+                        </span>*/}
                       </div>
                     ) : null}
                   </td>
@@ -157,14 +157,14 @@ export const StudentPW = () => {
                           <a onClick={openFile(studentPW.imageSideContentType, studentPW.imageSide)}>
                             <img
                               src={`data:${studentPW.imageSideContentType};base64,${studentPW.imageSide}`}
-                              style={{ maxHeight: '30px' }}
+                              style={{ maxHeight: '50px', maxWidth: '50px' }}
                             />
                             &nbsp;
                           </a>
                         ) : null}
-                        <span>
+                        {/*<span>
                           {studentPW.imageSideContentType}, {byteSize(studentPW.imageSide)}
-                        </span>
+                        </span>*/}
                       </div>
                     ) : null}
                   </td>

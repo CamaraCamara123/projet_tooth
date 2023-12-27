@@ -1,15 +1,20 @@
 package com.tooth.service;
 
 import com.tooth.domain.PW;
+import com.tooth.domain.Student;
+import com.tooth.domain.StudentPW;
 import com.tooth.repository.PWRepository;
-import com.tooth.service.dto.PWDTO;
+import com.tooth.repository.StudentRepository;
+import com.tooth.service.dto.*;
 import com.tooth.service.mapper.PWMapper;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,6 +32,9 @@ public class PWService {
     private final PWRepository pWRepository;
 
     private final PWMapper pWMapper;
+
+    @Autowired
+    StudentRepository studentRepository;
 
     public PWService(PWRepository pWRepository, PWMapper pWMapper) {
         this.pWRepository = pWRepository;
@@ -119,5 +127,31 @@ public class PWService {
     public void delete(Long id) {
         log.debug("Request to delete PW : {}", id);
         pWRepository.deleteById(id);
+    }
+
+    public List<PWDTO> findPWByStudent(String username) {
+        Student student = studentRepository.findStudentByUserName(username);
+        Set<PW> PWS = student.getGroupe().getPws();
+
+        return PWS
+            .stream()
+            .map(p -> {
+                PWDTO pt = new PWDTO();
+                pt.setId(p.getId());
+                pt.setTitle(p.getTitle());
+                pt.setDocs(p.getDocs());
+                pt.setObjectif(p.getObjectif());
+                pt.setDocsContentType(p.getDocsContentType());
+
+                if (p.getTooth() != null) {
+                    ToothDTO t = new ToothDTO();
+                    t.setId(p.getTooth().getId());
+                    t.setName(p.getTooth().getName());
+                    pt.setTooth(t);
+                }
+
+                return pt;
+            })
+            .collect(Collectors.toList());
     }
 }

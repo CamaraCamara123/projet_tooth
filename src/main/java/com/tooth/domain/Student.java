@@ -40,12 +40,12 @@ public class Student implements Serializable {
     @Column(name = "birth_day", nullable = false)
     private Instant birthDay;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
     @NotNull
     @JoinColumn(unique = true)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnoreProperties(value = { "professor", "students", "pws" }, allowSetters = true)
     private Groupe groupe;
 

@@ -1,15 +1,21 @@
 package com.tooth.service;
 
 import com.tooth.domain.Groupe;
+import com.tooth.domain.Student;
 import com.tooth.repository.GroupeRepository;
+import com.tooth.repository.StudentRepository;
 import com.tooth.service.dto.GroupeDTO;
+import com.tooth.service.dto.ProfessorDTO;
+import com.tooth.service.dto.UserDTO;
 import com.tooth.service.mapper.GroupeMapper;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +31,9 @@ public class GroupeService {
     private final GroupeRepository groupeRepository;
 
     private final GroupeMapper groupeMapper;
+
+    @Autowired
+    StudentRepository studentRepository;
 
     public GroupeService(GroupeRepository groupeRepository, GroupeMapper groupeMapper) {
         this.groupeRepository = groupeRepository;
@@ -108,5 +117,50 @@ public class GroupeService {
     public void delete(Long id) {
         log.debug("Request to delete Groupe : {}", id);
         groupeRepository.deleteById(id);
+    }
+
+    public List<GroupeDTO> findGroupsByUsername(String username) {
+        List<Groupe> groupes = groupeRepository.findGroupesByUsername(username);
+        return groupes
+            .stream()
+            .map(g -> {
+                GroupeDTO gt = new GroupeDTO();
+                gt.setId(g.getId());
+                gt.setCode(g.getCode());
+                gt.setYear(g.getYear());
+                ProfessorDTO pt = new ProfessorDTO();
+                pt.setId(g.getProfessor().getId());
+                pt.setGrade(g.getProfessor().getGrade());
+                UserDTO us = new UserDTO();
+                us.setId(g.getProfessor().getUser().getId());
+                us.setLogin(g.getProfessor().getUser().getLogin());
+                pt.setUser(us);
+                gt.setProfessor(pt);
+                return gt;
+            })
+            .collect(Collectors.toList());
+    }
+
+    public List<GroupeDTO> findGroupeByStudent(String username) {
+        Student st = studentRepository.findStudentByUserName(username);
+        Groupe groupe = st.getGroupe();
+
+        GroupeDTO groupeDTO = new GroupeDTO();
+        groupeDTO.setId(groupe.getId());
+        groupeDTO.setCode(groupe.getCode());
+        groupeDTO.setYear(groupe.getYear());
+
+        ProfessorDTO pt = new ProfessorDTO();
+        pt.setId(groupe.getProfessor().getId());
+        pt.setGrade(groupe.getProfessor().getGrade());
+        UserDTO us = new UserDTO();
+        us.setId(groupe.getProfessor().getUser().getId());
+        us.setLogin(groupe.getProfessor().getUser().getLogin());
+        pt.setUser(us);
+        groupeDTO.setProfessor(pt);
+
+        List<GroupeDTO> gts = new ArrayList<>();
+        gts.add(groupeDTO);
+        return gts;
     }
 }

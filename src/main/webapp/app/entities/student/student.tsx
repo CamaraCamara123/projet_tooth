@@ -85,9 +85,9 @@ export const Student = () => {
           <Table responsive>
             <thead>
               <tr>
-                <th className="hand" onClick={sort('id')}>
+                {/*<th className="hand" onClick={sort('id')}>
                   <Translate contentKey="toothApp.student.id">ID</Translate> <FontAwesomeIcon icon={getSortIconByFieldName('id')} />
-                </th>
+                </th>*/}
                 <th className="hand" onClick={sort('number')}>
                   <Translate contentKey="toothApp.student.number">Number</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('number')} />
@@ -114,11 +114,11 @@ export const Student = () => {
             <tbody>
               {studentList.map((student, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
-                  <td>
+                  {/*<td>
                     <Button tag={Link} to={`/student/${student.id}`} color="link" size="sm">
                       {student.id}
                     </Button>
-                  </td>
+                  </td>*/}
                   <td>{student.number}</td>
                   <td>{student.cne}</td>
                   <td>{student.cin}</td>

@@ -25,12 +25,12 @@ export const PWDetail = () => {
           <Translate contentKey="toothApp.pW.detail.title">PW</Translate>
         </h2>
         <dl className="jh-entity-details">
-          <dt>
+          {/*<dt>
             <span id="id">
               <Translate contentKey="global.field.id">ID</Translate>
             </span>
           </dt>
-          <dd>{pWEntity.id}</dd>
+          <dd>{pWEntity.id}</dd>*/}
           <dt>
             <span id="title">
               <Translate contentKey="toothApp.pW.title">Title</Translate>

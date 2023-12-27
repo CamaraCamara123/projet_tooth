@@ -9,6 +9,8 @@ import Groupe from './groupe';
 import Tooth from './tooth';
 import PW from './pw';
 import StudentPW from './student-pw';
+import PrivateRoute from 'app/shared/auth/private-route';
+import { AUTHORITIES } from 'app/config/constants';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 export default () => {
@@ -16,8 +18,18 @@ export default () => {
     <div>
       <ErrorBoundaryRoutes>
         {/* prettier-ignore */}
-        <Route path="professor/*" element={<Professor />} />
-        <Route path="student/*" element={<Student />} />
+        <Route path="professor/*" element={
+          <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN]}>
+            <Professor />
+          </PrivateRoute>} />
+        <Route
+          path="student/*"
+          element={
+            <PrivateRoute hasAnyAuthorities={[AUTHORITIES.PROFESSOR]}>
+              <Student />
+            </PrivateRoute>
+          }
+        />
         <Route path="groupe/*" element={<Groupe />} />
         <Route path="tooth/*" element={<Tooth />} />
         <Route path="pw/*" element={<PW />} />

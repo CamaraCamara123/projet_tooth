@@ -43,7 +43,7 @@ public class PW implements Serializable {
     @JsonIgnoreProperties(value = { "pws" }, allowSetters = true)
     private Tooth tooth;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "rel_pw__groupe", joinColumns = @JoinColumn(name = "pw_id"), inverseJoinColumns = @JoinColumn(name = "groupe_id"))
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "professor", "students", "pws" }, allowSetters = true)

@@ -1,6 +1,9 @@
 package com.tooth.web.rest;
 
+import com.tooth.domain.Student;
 import com.tooth.repository.GroupeRepository;
+import com.tooth.repository.StudentRepository;
+import com.tooth.security.AuthoritiesConstants;
 import com.tooth.service.GroupeService;
 import com.tooth.service.dto.GroupeDTO;
 import com.tooth.web.rest.errors.BadRequestAlertException;
@@ -8,13 +11,18 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -140,7 +148,31 @@ public class GroupeResource {
     @GetMapping("")
     public List<GroupeDTO> getAllGroupes() {
         log.debug("REST request to get all Groupes");
-        return groupeService.findAll();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication.isAuthenticated()) {
+            // Check if the user has the admin role
+            boolean isAdmin = authentication.getAuthorities().contains(new SimpleGrantedAuthority(AuthoritiesConstants.ADMIN));
+
+            if (isAdmin) {
+                return groupeService.findAll();
+            } else {
+                String username = authentication.getName();
+                boolean isProf = authentication.getAuthorities().contains(new SimpleGrantedAuthority(AuthoritiesConstants.PROFESSOR));
+                boolean isStudent = authentication.getAuthorities().contains(new SimpleGrantedAuthority(AuthoritiesConstants.STUDENT));
+
+                if (isProf) {
+                    return groupeService.findGroupsByUsername(username);
+                }
+                if (isStudent) {
+                    return groupeService.findGroupeByStudent(username);
+                }
+            }
+        } else {
+            return Collections.emptyList();
+        }
+
+        return Collections.emptyList();
     }
 
     /**

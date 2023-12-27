@@ -1,6 +1,7 @@
 package com.tooth.web.rest;
 
 import com.tooth.repository.PWRepository;
+import com.tooth.security.AuthoritiesConstants;
 import com.tooth.service.PWService;
 import com.tooth.service.dto.PWDTO;
 import com.tooth.web.rest.errors.BadRequestAlertException;
@@ -8,6 +9,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -15,6 +17,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -139,7 +144,29 @@ public class PWResource {
     @GetMapping("")
     public List<PWDTO> getAllPWS(@RequestParam(required = false, defaultValue = "true") boolean eagerload) {
         log.debug("REST request to get all PWS");
-        return pWService.findAll();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication.isAuthenticated()) {
+            // Check if the user has the admin role
+            boolean isAdmin = authentication.getAuthorities().contains(new SimpleGrantedAuthority(AuthoritiesConstants.ADMIN));
+
+            if (isAdmin) {
+                return pWService.findAll();
+            } else {
+                String username = authentication.getName();
+                boolean isStudent = authentication.getAuthorities().contains(new SimpleGrantedAuthority(AuthoritiesConstants.STUDENT));
+                boolean isProf = authentication.getAuthorities().contains(new SimpleGrantedAuthority(AuthoritiesConstants.PROFESSOR));
+                if (isStudent) {
+                    return pWService.findPWByStudent(username);
+                } else if (isProf) {
+                    return pWService.findAll();
+                }
+            }
+        } else {
+            return Collections.emptyList();
+        }
+
+        return Collections.emptyList();
     }
 
     /**

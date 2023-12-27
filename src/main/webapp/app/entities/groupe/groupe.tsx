@@ -84,9 +84,9 @@ export const Groupe = () => {
           <Table responsive>
             <thead>
               <tr>
-                <th className="hand" onClick={sort('id')}>
+                {/*<th className="hand" onClick={sort('id')}>
                   <Translate contentKey="toothApp.groupe.id">ID</Translate> <FontAwesomeIcon icon={getSortIconByFieldName('id')} />
-                </th>
+                </th>*/}
                 <th className="hand" onClick={sort('code')}>
                   <Translate contentKey="toothApp.groupe.code">Code</Translate> <FontAwesomeIcon icon={getSortIconByFieldName('code')} />
                 </th>
@@ -102,11 +102,11 @@ export const Groupe = () => {
             <tbody>
               {groupeList.map((groupe, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
-                  <td>
+                  {/*<td>
                     <Button tag={Link} to={`/groupe/${groupe.id}`} color="link" size="sm">
                       {groupe.id}
                     </Button>
-                  </td>
+                  </td>*/}
                   <td>{groupe.code}</td>
                   <td>{groupe.year}</td>
                   <td>{groupe.professor ? <Link to={`/professor/${groupe.professor.id}`}>{groupe.professor.id}</Link> : ''}</td>

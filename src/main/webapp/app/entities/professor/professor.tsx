@@ -84,9 +84,9 @@ export const Professor = () => {
           <Table responsive>
             <thead>
               <tr>
-                <th className="hand" onClick={sort('id')}>
+                {/*<th className="hand" onClick={sort('id')}>
                   <Translate contentKey="toothApp.professor.id">ID</Translate> <FontAwesomeIcon icon={getSortIconByFieldName('id')} />
-                </th>
+                </th>*/}
                 <th className="hand" onClick={sort('grade')}>
                   <Translate contentKey="toothApp.professor.grade">Grade</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('grade')} />
@@ -100,11 +100,11 @@ export const Professor = () => {
             <tbody>
               {professorList.map((professor, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
-                  <td>
+                  {/*<td>
                     <Button tag={Link} to={`/professor/${professor.id}`} color="link" size="sm">
                       {professor.id}
                     </Button>
-                  </td>
+                  </td>*/}
                   <td>{professor.grade}</td>
                   <td>{professor.user ? professor.user.login : ''}</td>
                   <td className="text-end">

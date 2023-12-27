@@ -1,5 +1,7 @@
 package com.tooth.repository;
 
+import com.tooth.domain.Professor;
+import com.tooth.domain.Student;
 import com.tooth.domain.StudentPW;
 import java.util.List;
 import java.util.Optional;
@@ -37,4 +39,7 @@ public interface StudentPWRepository extends JpaRepository<StudentPW, Long> {
 
     @Query("select studentPW from StudentPW studentPW left join fetch studentPW.pw where studentPW.id =:id")
     Optional<StudentPW> findOneWithToOneRelationships(@Param("id") Long id);
+
+    @Query("select s from StudentPW s where s.student.id = :id")
+    List<StudentPW> findStudentPWByStudent(@Param("id") Long id);
 }

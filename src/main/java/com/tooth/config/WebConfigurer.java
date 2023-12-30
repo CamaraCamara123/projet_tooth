@@ -87,9 +87,9 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
         config.addAllowedOriginPattern("*");
         config.addAllowedOrigin("https://railway.app");
         config.addAllowedOrigin("https://*.railway.app");
-        config.addAllowedOrigin("*");
+        /*config.addAllowedOrigin("*");
         config.addAllowedMethod("*");
-        config.addAllowedHeader("*");
+        config.addAllowedHeader("*");*/
         if (!CollectionUtils.isEmpty(config.getAllowedOrigins()) || !CollectionUtils.isEmpty(config.getAllowedOriginPatterns())) {
             log.debug("Registering CORS filter");
 

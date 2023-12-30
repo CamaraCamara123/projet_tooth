@@ -13,6 +13,7 @@ import java.util.Optional;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.auditing.AuditingHandler;
@@ -65,7 +66,7 @@ class UserServiceIT {
         user.setImageUrl(DEFAULT_IMAGEURL);
         user.setLangKey(DEFAULT_LANGKEY);
 
-        when(dateTimeProvider.getNow()).thenReturn(Optional.of(LocalDateTime.now()));
+        Mockito.when(dateTimeProvider.getNow()).thenReturn(Optional.of(LocalDateTime.now()));
         auditingHandler.setDateTimeProvider(dateTimeProvider);
     }
 
@@ -147,7 +148,7 @@ class UserServiceIT {
     @Transactional
     void assertThatNotActivatedUsersWithNotNullActivationKeyCreatedBefore3DaysAreDeleted() {
         Instant now = Instant.now();
-        when(dateTimeProvider.getNow()).thenReturn(Optional.of(now.minus(4, ChronoUnit.DAYS)));
+        Mockito.when(dateTimeProvider.getNow()).thenReturn(Optional.of(now.minus(4, ChronoUnit.DAYS)));
         user.setActivated(false);
         user.setActivationKey(RandomStringUtils.random(20));
         User dbUser = userRepository.saveAndFlush(user);
@@ -165,7 +166,7 @@ class UserServiceIT {
     @Transactional
     void assertThatNotActivatedUsersWithNullActivationKeyCreatedBefore3DaysAreNotDeleted() {
         Instant now = Instant.now();
-        when(dateTimeProvider.getNow()).thenReturn(Optional.of(now.minus(4, ChronoUnit.DAYS)));
+        Mockito.when(dateTimeProvider.getNow()).thenReturn(Optional.of(now.minus(4, ChronoUnit.DAYS)));
         user.setActivated(false);
         User dbUser = userRepository.saveAndFlush(user);
         dbUser.setCreatedDate(now.minus(4, ChronoUnit.DAYS));
